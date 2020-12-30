@@ -2,7 +2,7 @@
 var activePlayer = 0;
 
 //Тоглогчдын цуглуулсан оноог хадгалах хувьсагч
-var score = [0, 0];
+var scores = [0, 0];
 
 //Тоглогчийн ээлжиндээ цуглуулж байгаа оноог хадгалах хувьсагч
 var roundScore = 0;
@@ -50,17 +50,74 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
     roundScore = roundScore + diceNumber;
     document.getElementById("current-" + activePlayer).textContent = roundScore;
   } else {
-    //Onoog tegleed toglogchiin eeljiig solih
-    roundScore = 0;
-    document.getElementById("current-" + activePlayer).textContent = "0";
-    //If active player equials to 0, make it 1. If not, active player=1
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-
-    //ActiveIcon must be moved: Red point
-    document.querySelector(".player-0-panel").classList.toggle("active"); //03.046_29.00: toggle: bval remove
-    document.querySelector(".player-1-panel").classList.toggle("active");
-
-    //shoog tyr alga bolgoh
-    diceDom.style.display = "none";
+    switchToNextPlayer();
   }
 }); // 04.042_32.30 Anonymous function used here coz roll dice btn is only one.
+
+//btn-hold-iin event listener
+document.querySelector(".btn-hold").addEventListener("click", function () {
+  //Yg toglogchiin onoog global onoon deer nemj ugnu
+  //var scores = [00, 0];
+  scores[activePlayer] = scores[activePlayer] + roundScore; //Nice!!! 03.044_10.30
+  //Eeljiin onoog hevleh
+  document.getElementById("score-" + activePlayer).textContent =
+    scores[activePlayer];
+
+  //Ug toglogch hojison esehiig (onoo>=100) shalgah
+  if (scores[activePlayer] >= 20) {
+    //If score reaches 100, Winner! label.
+    document.getElementById("name-" + activePlayer).textContent = "winner!";
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.add("winner");
+    //If you want to remove winner's red color, code is below
+    /*
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.remove("active");
+    */
+  } else {
+    //toglogchiin eeljiig solino
+    switchToNextPlayer();
+  }
+});
+
+// This function switches active status to another player!!!
+function switchToNextPlayer() {
+  //Onoog tegleed toglogchiin eeljiig solih
+  roundScore = 0;
+  document.getElementById("current-" + activePlayer).textContent = "0";
+  //If active player equials to 0, make it 1. If not, active player=1
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+  //ActiveIcon must be moved: Red point
+  document.querySelector(".player-0-panel").classList.toggle("active"); //03.046_29.00: toggle: bval remove
+  document.querySelector(".player-1-panel").classList.toggle("active");
+
+  //shoog tyr alga bolgoh
+  diceDom.style.display = "none";
+}
+
+//btn-newGame Шинэ тоглоом эхлүүлэх товчний эвэнт листенэр
+document.querySelector(".btn-new").addEventListener("click", function () {
+  //ActiveIcon must be moved: Red point
+  document.querySelector(".player-0-panel").classList.add("active"); //03.046_29.00: toggle: bval remove
+  //document.querySelector(".player-1-panel").classList.toggle("active");
+  //shoog tyr alga bolgoh
+  document.querySelector(".player-1-panel").classList.remove("active");
+  diceDom.style.display = "none";
+
+  for (var i = 0; i < 2; i++) {
+    document.getElementById(".name-" + (i + 1)).textContent =
+      "PLAYER " + (i + 1);
+    document
+      .querySelector(".player-" + (i + 1) + "-panel")
+      .classList.remove("winner");
+    scores[i] = 0;
+    //Eeljiin onoog hevleh -holdiin board deer
+    document.getElementById("score-" + (i + 1)).textContent = scores[i];
+
+    document.getElementById("current-" + i).textContent = "0";
+  }
+  activePlayer = 0;
+});
