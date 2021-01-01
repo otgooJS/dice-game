@@ -154,25 +154,17 @@ i {
   top: 467px;
 }
 
-.dice1 {
+.dice {
   /*JS Lesson003.0041_36.23_making dice png invisible*/
   /* display: none; */
   position: absolute;
   left: 50%;
-  top: 138px;
+  top: 178px;
   transform: translateX(-50%);
   height: 100px;
   box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
 }
 
-.dice2 {
-  position: absolute;
-  left: 50%;
-  top: 260px;
-  transform: translateX(-50%);
-  height: 100px;
-  box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
-}
 .winner {
   background-color: #f7f7f7;
 }
