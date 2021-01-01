@@ -36,7 +36,7 @@ function initGame() {
   document.getElementById("score-1").textContent = "0";
   document.getElementById("current-0").textContent = "0";
   document.getElementById("current-1").textContent = "0";
-  //diceDom.style.display = "none";
+  diceDom.style.display = "none";
 
   //Тоглогчийн нэрийг буцааж гаргах /WINNER!-ийг болиулах/
   document.getElementById("name-0").textContent = "PLAYER 1";
